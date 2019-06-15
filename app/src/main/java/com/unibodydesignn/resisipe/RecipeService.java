@@ -32,7 +32,15 @@ public interface RecipeService {
     
     @DELETE("/recipes/{id}")
     Call<Recipe> deletePost(@Path("id") String id);
-
+    
+    @FormUrlEncoded
+    @PATCH("/recipes/{id}")
+    Call<Recipe> updateData(
+            @Path("id") String id,
+            @Field("recipe_name") String name,
+            @Field("recipe_detail") String details,
+            @Field("recipe_ingredients") String ingredients,
+            @Field("recipe_tags") String tags);
 
 }
 
