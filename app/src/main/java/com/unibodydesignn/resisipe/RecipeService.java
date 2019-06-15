@@ -29,6 +29,9 @@ public interface RecipeService {
             @Field("recipe_detail") String details,
             @Field("recipe_ingredients") String ingredients,
             @Field("recipe_tags") String tags);
+    
+    @DELETE("/recipes/{id}")
+    Call<Recipe> deletePost(@Path("id") String id);
 
 
 }
