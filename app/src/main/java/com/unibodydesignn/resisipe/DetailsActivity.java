@@ -112,5 +112,32 @@ public class DetailsActivity extends AppCompatActivity {
 
     public void deleteRecipe() {
         db.deleteRecipe(recipe.getRecipeID());
+        deleteWithHeroku(recipe);
+    }
+    
+    public void deleteWithHeroku(Recipe recipe) {
+
+        Gson gson = new GsonBuilder().setLenient().create();
+        retrofit = new Retrofit.Builder().baseUrl("https://secure-brushlands-89470.herokuapp.com")
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RecipeService recipeService = retrofit.create(RecipeService.class);
+        call = recipeService.deletePost(recipe.getRecipeID());
+        call.enqueue(new Callback<Recipe>() {
+            @Override
+            public void onResponse(Call<Recipe> call, Response<Recipe> response) {
+                Toast.makeText(DetailsActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
+
+                Log.i("silindi mi ", call.request().toString());
+
+            }
+
+            @Override
+            public void onFailure(Call<Recipe> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }
