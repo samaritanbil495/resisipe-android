@@ -94,7 +94,7 @@ public class AddActivity extends AppCompatActivity {
             recipe.setRecipeIngredients(recipeIngredients);
             recipe.setRecipeTags(recipeTags);
             db.insertRecipe(recipe);
-            addRecipeeToHeroku(recipe);
+            addRecipeToHeroku(recipe);
             goHome();
         } else {
             Toast.makeText(getApplicationContext(), "Do not leave empty!", Toast.LENGTH_SHORT).show();
