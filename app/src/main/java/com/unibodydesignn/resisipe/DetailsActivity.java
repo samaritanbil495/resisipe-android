@@ -108,6 +108,32 @@ public class DetailsActivity extends AppCompatActivity {
         recipe1.setRecipeTags("tagtasg");
         recipe1.setRecipeID(recipe.getRecipeID());
         Log.i("recipe id update?", recipe1.getRecipeID());
+        db.updateRecipe(recipe1);
+        updateWithHeroku(recipe1);
+    }
+    
+    public void updateWithHeroku(Recipe recipe) {
+        Gson gson = new GsonBuilder().setLenient().create();
+        retrofit = new Retrofit.Builder().baseUrl("https://secure-brushlands-89470.herokuapp.com")
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RecipeService recipeService = retrofit.create(RecipeService.class);
+
+        call = recipeService.updateData(recipe.getRecipeID(), recipe.getRecipeName(), recipe.getRecipeDetails(), recipe.getRecipeIngredients(), recipe.getRecipeTags());
+        call.enqueue(new Callback<Recipe>() {
+            @Override
+            public void onResponse(Call<Recipe> call, Response<Recipe> response) {
+                Toast.makeText(DetailsActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+                Log.i("update edildi mi", response.message());
+            }
+
+            @Override
+            public void onFailure(Call<Recipe> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public void deleteRecipe() {
