@@ -64,7 +64,7 @@ public class Recipe implements Serializable {
     }
 
     public void setRecipeIngredients(String recipeIngredients) {
-       this.recipeIngredients += recipeIngredients + " ";
+       this.recipeIngredients = recipeIngredients + " ";
     }
 
     public String getRecipeIngredients() {
@@ -117,6 +117,14 @@ public class Recipe implements Serializable {
 
     public Bitmap getEnjoy() {
         return this.enjoy;
+    }
+
+    public void setRecipeTags(String recipeTags) {
+        this.recipeTags = recipeTags;
+    }
+
+    public String getRecipeTags() {
+        return this.recipeTags;
     }
 
     public String constructJSONCardInfo() {

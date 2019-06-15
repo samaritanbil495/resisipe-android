@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,13 +34,9 @@ public class DetailsActivity extends AppCompatActivity {
     Button editButton;
     Button deleteButton;
 
-    ImageView prepareImage;
-    ImageView cookingImage;
-    ImageView cookedImage;
-    ImageView enjoyImage;
-
     EditText recipeName;
     EditText recipeDetails;
+    EditText recipeIngredients;
 
     Bitmap prepare;
     Bitmap cooking;
@@ -59,11 +57,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         recipeName = findViewById(R.id.recipeName);
         recipeDetails = findViewById(R.id.recipeDetails);
-        prepareImage = findViewById(R.id.prepare);
-        cookingImage = findViewById(R.id.cooking);
-        cookedImage = findViewById(R.id.cooked);
-        enjoyImage = findViewById(R.id.enjoy);
-
+        recipeIngredients = findViewById(R.id.recipeIngredients);
         initializeActivity();
 
         homeButton = findViewById(R.id.homeButton);
@@ -72,21 +66,6 @@ public class DetailsActivity extends AppCompatActivity {
         editButton = findViewById(R.id.updateButton);
         deleteButton = findViewById(R.id.deleteButton);
 
-        prepareImage.setOnClickListener((v) -> {
-            selectPrepareImage();
-        });
-
-        cookingImage.setOnClickListener((v) -> {
-            selectCookingImage();
-        });
-
-        cookedImage.setOnClickListener((v) -> {
-            selectCookedImage();
-        });
-
-        enjoyImage.setOnClickListener((v) -> {
-            selectEnjoyImage();
-        });
 
         homeButton.setOnClickListener((v) -> {
             Intent i = new Intent(DetailsActivity.this, MainActivity.class);
@@ -114,83 +93,24 @@ public class DetailsActivity extends AppCompatActivity {
     public void initializeActivity() {
         recipeName.setText(recipe.getRecipeName());
         recipeDetails.setText(recipe.getRecipeDetails());
+        recipeIngredients.setText(recipe.getRecipeIngredients());
     }
 
     public void editRecipe() {
         String rcpName = recipeName.getText().toString().trim();
         String rcpDeta = recipeDetails.getText().toString().trim();
-        recipe.setRecipeName(rcpName);
-        recipe.setRecipeIngredients(rcpDeta);
-        db.updateRecipe(recipe);
+        String rcpIng = recipeIngredients.getText().toString().trim();
+
+        Recipe recipe1 = new Recipe();
+        recipe1.setRecipeName("melih");
+        recipe1.setRecipeDetails("dasdf");
+        recipe1.setRecipeIngredients("afasdf");
+        recipe1.setRecipeTags("tagtasg");
+        recipe1.setRecipeID(recipe.getRecipeID());
+        Log.i("recipe id update?", recipe1.getRecipeID());
     }
-
-
 
     public void deleteRecipe() {
         db.deleteRecipe(recipe.getRecipeID());
-    }
-
-
-
-    public void selectPrepareImage() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, 1);
-    }
-
-    public void selectCookingImage() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, 2);
-    }
-
-    public void selectCookedImage() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, 3);
-    }
-
-    public void selectEnjoyImage() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, 4);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != RESULT_OK) {
-            return;
-        }
-        if (requestCode == 1) {
-            final Bundle extras = data.getExtras();
-            if (extras != null) {
-                //Get image
-                prepare = extras.getParcelable("data");
-                prepareImage.setImageBitmap(prepare);
-            }
-        } else if (requestCode == 2) {
-            final Bundle extras = data.getExtras();
-            if (extras != null) {
-                //Get image
-                cooking = extras.getParcelable("data");
-                cookingImage.setImageBitmap(cooking);
-            }
-        } else if (requestCode == 3) {
-            final Bundle extras = data.getExtras();
-            if (extras != null) {
-                //Get image
-                cooked = extras.getParcelable("data");
-                cookedImage.setImageBitmap(cooked);
-            }
-        } else if (requestCode == 4) {
-            final Bundle extras = data.getExtras();
-            if (extras != null) {
-                //Get image
-                enjoy = extras.getParcelable("data");
-                enjoyImage.setImageBitmap(enjoy);
-            }
-        } else {
-            Log.i("BASARISIZ!", "error");
-        }
     }
 }

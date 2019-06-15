@@ -46,20 +46,18 @@ public class SearchActivity extends AppCompatActivity {
         searchRecipeButton.setOnClickListener((v) -> {
             String searchedWord = searchText.getText().toString().trim();
             search(searchedWord);
+            initialize(searchedList);
         });
     }
 
     public void search(String tag) {
         searchedList = new ArrayList<>();
-        searchHerokuByTag(tag);
         initialize(searchedList);
-        /*
-        String word = s;
+        String word = tag;
         for(Recipe rcp : recipeList) {
             if(rcp.getRecipeName().contains(word))
                 searchedList.add(rcp);
         }
-        */
     }
 
     public void initialize(List<Recipe> list) {
@@ -68,25 +66,5 @@ public class SearchActivity extends AppCompatActivity {
         lv.setAdapter(ra);
     }
 
-    public void searchHerokuByTag(String tag) {
-        Gson gson = new GsonBuilder().setLenient().create();
 
-        retrofit = new Retrofit.Builder().baseUrl("https://jsonplaceholder.typicode.com").
-                addConverterFactory(GsonConverterFactory.create(gson)).
-                build();
-
-        RecipeService recipeService = retrofit.create(RecipeService.class);
-        call = recipeService.searchRecipes(tag);
-        call.enqueue(new Callback<List<Recipe>>() {
-            @Override
-            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                searchedList.addAll(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<List<Recipe>> call, Throwable t) {
-                Log.d("snow", t.getMessage().toString());
-            }
-        });
-    }
 }
