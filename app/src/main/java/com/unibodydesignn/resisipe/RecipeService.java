@@ -21,6 +21,14 @@ public interface RecipeService {
     // /recipes_m
     @GET("/andrecipes/index")
     Call<List<Recipe>> allRecipes();
+    
+    @FormUrlEncoded
+    @POST("/andrecipes/new")
+    Call<Recipe> postData(
+            @Field("recipe_name") String name,
+            @Field("recipe_detail") String details,
+            @Field("recipe_ingredients") String ingredients,
+            @Field("recipe_tags") String tags);
 
 
 }
