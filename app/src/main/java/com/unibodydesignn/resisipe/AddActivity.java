@@ -94,12 +94,36 @@ public class AddActivity extends AppCompatActivity {
             recipe.setRecipeIngredients(recipeIngredients);
             recipe.setRecipeTags(recipeTags);
             db.insertRecipe(recipe);
+            addRecipeeToHeroku(recipe);
             goHome();
         } else {
             Toast.makeText(getApplicationContext(), "Do not leave empty!", Toast.LENGTH_SHORT).show();
         }
     }
+    
+    public void addRecipeToHeroku(Recipe recipe) {
+        Gson gson = new GsonBuilder().setLenient().create();
+        retrofit = new Retrofit.Builder().baseUrl("https://secure-brushlands-89470.herokuapp.com")
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson)).
+                        build();
 
+        RecipeService recipeService = retrofit.create(RecipeService.class);
+        call = recipeService.postData(recipe.getRecipeName(), recipe.getRecipeDetails(), recipe.getRecipeIngredients(), recipe.getRecipeTags());
+        //calling the api
+        call.enqueue(new Callback<Recipe>() {
+            @Override
+            public void onResponse(Call<Recipe> call, Response<Recipe> response) {
+                Toast.makeText(AddActivity.this, "Added", Toast.LENGTH_SHORT).show();
+                Log.i("eklendi mi ", call.request().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Recipe> call, Throwable t) {
+                //Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 
     public String generateID() {
         return RandomStringUtils.randomAlphanumeric(5).toLowerCase(); // for alphanumeric
