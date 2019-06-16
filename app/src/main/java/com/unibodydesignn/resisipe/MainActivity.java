@@ -24,7 +24,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static SQLiteController db;
     Button homeButton;
     Button addButton;
     Button searchButton;
@@ -42,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermission();
         }
-        db = new SQLiteController(getApplicationContext());
         recipeList = new ArrayList<>(100);
         initializeHeroku();
         initializeRecipes();
@@ -59,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         homeButton.setOnClickListener((v) -> {
-            recipeList = db.getRecipeList();
+            initializeHeroku();
             initializeRecipes();
         });
     }
@@ -93,9 +91,7 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<Recipe>>() {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                for(Recipe r : response.body())
-                    db.insertRecipe(r);
-                recipeList.addAll(db.getRecipeList());
+                recipeList.addAll(response.body());
                 initializeRecipes();
             }
 
