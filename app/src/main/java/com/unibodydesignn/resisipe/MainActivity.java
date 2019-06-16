@@ -21,7 +21,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         recipeList = new ArrayList<>(100);
         initializeHeroku();
         initializeRecipes();
-        homeButton = findViewById(R.id.deleteButton);
+        homeButton = findViewById(R.id.homeButton);
         addButton = findViewById(R.id.addButton);
         searchButton = findViewById(R.id.searchButton);
 

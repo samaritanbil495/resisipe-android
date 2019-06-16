@@ -2,11 +2,13 @@ package com.unibodydesignn.resisipe;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -27,6 +29,11 @@ public class SearchActivity extends AppCompatActivity {
     List<Recipe> recipeList;
     List<Recipe> searchedList;
     SQLiteController db;
+
+    Button homeButton;
+    Button searchButton;
+    Button addButton;
+
     public static Retrofit retrofit;
     public static RecipeService service;
     public static Call<List<Recipe>> call;
@@ -43,11 +50,33 @@ public class SearchActivity extends AppCompatActivity {
         searchText = findViewById(R.id.searchText);
         searchRecipeButton = findViewById(R.id.searchRecipeButton);
 
+        addButton = findViewById(R.id.addButton);
+        homeButton = findViewById(R.id.homeButton);
+        searchButton = findViewById(R.id.searchButton);
+
         searchRecipeButton.setOnClickListener((v) -> {
             String searchedWord = searchText.getText().toString().trim();
-            search(searchedWord);
-            initialize(searchedList);
+            if(searchedWord == null || searchedWord.equals(""))
+                Toast.makeText(SearchActivity.this, "Search for a tag!", Toast.LENGTH_SHORT).show();
+            else {
+                search(searchedWord);
+                initialize(searchedList);
+            }
         });
+
+        addButton.setOnClickListener((v) -> {
+            goAdd();
+        });
+
+        homeButton.setOnClickListener((v) -> {
+            goHome();
+        });
+
+        searchButton.setOnClickListener((v) -> {
+            recipeList = db.getRecipeList();
+            initialize(recipeList);
+        });
+
     }
 
     public void search(String tag) {
@@ -55,7 +84,7 @@ public class SearchActivity extends AppCompatActivity {
         initialize(searchedList);
         String word = tag;
         for(Recipe rcp : recipeList) {
-            if(rcp.getRecipeName().contains(word))
+            if(rcp.getRecipeTags().contains(word))
                 searchedList.add(rcp);
         }
     }
@@ -66,5 +95,12 @@ public class SearchActivity extends AppCompatActivity {
         lv.setAdapter(ra);
     }
 
+    public void goHome() {
+        startActivity(new Intent(SearchActivity.this, MainActivity.class));
+    }
+
+    public void goAdd() {
+        startActivity(new Intent(SearchActivity.this, AddActivity.class));
+    }
 
 }

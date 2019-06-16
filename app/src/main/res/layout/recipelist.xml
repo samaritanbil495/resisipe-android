@@ -4,10 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#62615E"
     android:orientation="vertical" >
 
     <LinearLayout
-
+        android:background="@drawable/list_background"
         android:id="@+id/seeDetails"
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -15,26 +16,34 @@
 
         <ImageView
             android:id="@+id/recipePreview"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="100dp"
             app:srcCompat="@android:drawable/ic_menu_gallery" />
 
         <TextView
             android:id="@+id/recipeName"
             android:layout_width="200dp"
-            android:layout_height="100dp"
-            android:text="PATLICAN KEBAP" />
+            android:layout_height="40dp"
+            android:layout_marginTop="30dp"
+            android:background="#62615E"
+            android:text="patlıcan kebap"
+            android:textAlignment="center"
+            android:textColor="#F9F8E3"
+            android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="100dp"
+            android:background="@drawable/list_background"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/details"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_weight="1" />
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/details_background"
+                android:layout_weight="0" />
         </LinearLayout>
 
     </LinearLayout>

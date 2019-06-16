@@ -20,7 +20,6 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.json.JSONObject;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -46,7 +45,7 @@ public class AddActivity extends AppCompatActivity {
         db = MainActivity.db;
         recipe = new Recipe();
 
-        homeButton = findViewById(R.id.deleteButton);
+        homeButton = findViewById(R.id.homeButton);
         addButton = findViewById(R.id.addButton);
         searchButton = findViewById(R.id.searchButton);
         addRecipeButton = findViewById(R.id.add_recipe);
@@ -94,7 +93,7 @@ public class AddActivity extends AppCompatActivity {
             recipe.setRecipeIngredients(recipeIngredients);
             recipe.setRecipeTags(recipeTags);
             db.insertRecipe(recipe);
-            addRecipeeToHeroku(recipe);
+            addRecipeToHeroku(recipe);
             goHome();
         } else {
             Toast.makeText(getApplicationContext(), "Do not leave empty!", Toast.LENGTH_SHORT).show();
