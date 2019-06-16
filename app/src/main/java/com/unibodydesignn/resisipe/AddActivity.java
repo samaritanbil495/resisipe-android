@@ -99,7 +99,7 @@ public class AddActivity extends AppCompatActivity {
             Log.i("info", recipe.getRecipeIngredients());
             Log.i("info", recipe.getRecipeID());
             Log.i("info", recipe.getRecipeTags());
-            //addRecipeToHeroku(recipe);
+            addRecipeToHeroku(recipe);
             goHome();
         } else {
             Toast.makeText(getApplicationContext(), "Do not leave empty!", Toast.LENGTH_SHORT).show();

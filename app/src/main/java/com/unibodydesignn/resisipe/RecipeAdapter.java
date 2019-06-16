@@ -3,7 +3,6 @@ package com.unibodydesignn.resisipe;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +59,7 @@ public class RecipeAdapter extends BaseAdapter {
         TextView recipeName = convertView.findViewById(R.id.recipeName);
         recipeName.setText(recipe.getRecipeName());
 
-        Button recipeDetails = convertView.findViewById(R.id.details);
+        Button recipeDetails = convertView.findViewById(R.id.detailsButton);
         recipeDetails.setOnClickListener((view -> {
             Intent i = new Intent(context.getApplicationContext(), DetailsActivity.class);
             i.putExtra("recipe", recipe);
