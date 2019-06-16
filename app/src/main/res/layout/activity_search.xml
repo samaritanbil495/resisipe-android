@@ -43,10 +43,10 @@
                 android:background="@null"
                 android:ems="10"
                 android:gravity="center"
-                android:hint="Search by email or name..."
+                android:hint="Search by tag..."
                 android:inputType="text"
-                android:textColor="#F9F8E3"
-                android:textColorHint="#F9F8E3"></EditText>
+                android:textColor="#D97077"
+                android:textColorHint="#D97077"></EditText>
 
         </LinearLayout>
     </LinearLayout>
