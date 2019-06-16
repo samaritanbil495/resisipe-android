@@ -25,7 +25,7 @@ public class SQLiteController extends SQLiteOpenHelper implements Serializable {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + RECIPE_INFO);
         String create_table = "create table if not exists "
                 + RECIPE_INFO
-                + " (id text, name text, details text, ingredients text, userid text)";
+                + " (id text, name text, details text, ingredients text, userid text, tags text)";
         sqLiteDatabase.execSQL(create_table);
     }
 
@@ -48,6 +48,8 @@ public class SQLiteController extends SQLiteOpenHelper implements Serializable {
         contentValues.put("details", recipe.getRecipeDetails());
         contentValues.put("ingredients", recipe.getRecipeIngredients());
         contentValues.put("userid", recipe.getRecipeUserID());
+        contentValues.put("tags", recipe.getRecipeTags());
+
         db.insert(RECIPE_INFO, null, contentValues);
     }
 
@@ -59,6 +61,8 @@ public class SQLiteController extends SQLiteOpenHelper implements Serializable {
         contentValues.put("details", recipe.getRecipeDetails());
         contentValues.put("ingredients", recipe.getRecipeIngredients());
         contentValues.put("userid", recipe.getRecipeUserID());
+        contentValues.put("tags", recipe.getRecipeTags());
+
         db.update(RECIPE_INFO, contentValues, "id = ?", new String[] { recipe.getRecipeID()});
     }
 
@@ -79,12 +83,15 @@ public class SQLiteController extends SQLiteOpenHelper implements Serializable {
                 String recipeDetails = cursor.getString(2);
                 String recipeIngredients = cursor.getString(3);
                 String recipeUserID = cursor.getString(4);
+                String recipeTags = cursor.getString(5);
+
                 Recipe recipe = new Recipe();
                 recipe.setRecipeID(recipeID);
                 recipe.setRecipeName(recipeName);
                 recipe.setRecipeDetails(recipeDetails);
                 recipe.setRecipeIngredients(recipeIngredients);
                 recipe.setRecipeUserID(recipeUserID);
+                recipe.setRecipeTags(recipeTags);
                 recipeList.add(recipe);
             } while (cursor.moveToNext());
         } cursor.close();
