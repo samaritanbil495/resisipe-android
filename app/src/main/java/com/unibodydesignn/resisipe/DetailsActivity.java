@@ -50,7 +50,6 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        db = MainActivity.db;
         recipe = (Recipe) getIntent().getSerializableExtra("recipe");
 
         recipeName = findViewById(R.id.recipeName);
@@ -87,6 +86,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         deleteButton.setOnClickListener((v) -> {
             deleteRecipe();
+            goHome();
         });
     }
     public void initializeActivity() {
@@ -108,8 +108,8 @@ public class DetailsActivity extends AppCompatActivity {
         recipe1.setRecipeTags(rcpTag);
         recipe1.setRecipeID(recipe1.getRecipeID());
         recipe1.setRecipeID(recipe_id);
-        db.updateRecipe(recipe1);
         updateWithHeroku(recipe1);
+        goHome();
     }
 
     public void updateWithHeroku(Recipe recipe) {
@@ -136,16 +136,21 @@ public class DetailsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Recipe> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(DetailsActivity.this, "Updated", Toast.LENGTH_SHORT).show();
+                Log.i("Hata",t.getMessage());
             }
         });
     }
 
+    public void goHome(){
+        startActivity(new Intent(DetailsActivity.this, MainActivity.class));
+        finish();
+    }
+
     public void deleteRecipe() {
-        db.deleteRecipe(recipe.getRecipeID());
         deleteWithHeroku(recipe);
     }
-    
+
     public void deleteWithHeroku(Recipe recipe) {
 
         Gson gson = new GsonBuilder().setLenient().create();
@@ -167,7 +172,8 @@ public class DetailsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Recipe> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(DetailsActivity.this, "Deleted", Toast.LENGTH_SHORT).show();
+                Log.i("Hata", t.getMessage());
             }
         });
     }
