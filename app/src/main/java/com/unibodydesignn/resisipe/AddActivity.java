@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +24,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 public class AddActivity extends AppCompatActivity {
 
-    private SQLiteController db;
     Button homeButton;
     Button addButton;
     Button searchButton;
@@ -42,7 +42,6 @@ public class AddActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
-        db = MainActivity.db;
         recipe = new Recipe();
 
         homeButton = findViewById(R.id.homeButton);
@@ -69,9 +68,11 @@ public class AddActivity extends AppCompatActivity {
     }
 
     public void goHome() {
-        Intent i = new Intent(AddActivity.this, MainActivity.class);
-        startActivity(i);
-        finish();
+        new Handler().postDelayed(() -> {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }, 1000);
     }
 
     public void searchRecipe() {
@@ -93,7 +94,6 @@ public class AddActivity extends AppCompatActivity {
             recipe.setRecipeID(generateID());
             recipe.setRecipeIngredients(recipeIngredients);
             recipe.setRecipeTags(recipeTags);
-            db.insertRecipe(recipe);
             Log.i("info", recipe.getRecipeName());
             Log.i("info", recipe.getRecipeDetails());
             Log.i("info", recipe.getRecipeIngredients());
