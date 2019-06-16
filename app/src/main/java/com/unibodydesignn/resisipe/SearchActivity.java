@@ -28,7 +28,6 @@ public class SearchActivity extends AppCompatActivity {
     Button searchRecipeButton;
     List<Recipe> recipeList;
     List<Recipe> searchedList;
-    SQLiteController db;
 
     Button homeButton;
     Button searchButton;
@@ -42,7 +41,6 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        db = MainActivity.db;
         recipeList = new ArrayList<>();
         //recipeList = db.getRecipeList();
         searchedList = new ArrayList<>();
@@ -75,7 +73,6 @@ public class SearchActivity extends AppCompatActivity {
         });
 
         searchButton.setOnClickListener((v) -> {
-            recipeList = db.getRecipeList();
             initialize(recipeList);
         });
 
