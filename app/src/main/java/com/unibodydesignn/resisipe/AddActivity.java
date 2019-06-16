@@ -108,7 +108,7 @@ public class AddActivity extends AppCompatActivity {
     
     public void addRecipeToHeroku(Recipe recipe) {
         Gson gson = new GsonBuilder().setLenient().create();
-        retrofit = new Retrofit.Builder().baseUrl("https://secure-brushlands-89470.herokuapp.com")
+        retrofit = new Retrofit.Builder().baseUrl("https://resisipe.herokuapp.com")
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson)).
                         build();

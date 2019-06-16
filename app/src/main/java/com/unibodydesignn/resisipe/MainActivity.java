@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
         Gson gson = new GsonBuilder().setLenient().create();
         // https://jsonplaceholder.typicode.com
-        retrofit = new Retrofit.Builder().baseUrl("https://secure-brushlands-89470.herokuapp.com")
+        retrofit = new Retrofit.Builder().baseUrl("https://resisipe.herokuapp.com")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 

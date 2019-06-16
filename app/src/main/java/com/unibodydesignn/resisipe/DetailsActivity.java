@@ -115,7 +115,7 @@ public class DetailsActivity extends AppCompatActivity {
     public void updateWithHeroku(Recipe recipe) {
 
         Gson gson = new GsonBuilder().setLenient().create();
-        retrofit = new Retrofit.Builder().baseUrl("https://secure-brushlands-89470.herokuapp.com/")
+        retrofit = new Retrofit.Builder().baseUrl("https://resisipe.herokuapp.com/")
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
@@ -154,7 +154,7 @@ public class DetailsActivity extends AppCompatActivity {
     public void deleteWithHeroku(Recipe recipe) {
 
         Gson gson = new GsonBuilder().setLenient().create();
-        retrofit = new Retrofit.Builder().baseUrl("https://secure-brushlands-89470.herokuapp.com")
+        retrofit = new Retrofit.Builder().baseUrl("https://resisipe.herokuapp.com")
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
