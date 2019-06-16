@@ -82,7 +82,7 @@ public class DetailsActivity extends AppCompatActivity {
         });
 
         editButton.setOnClickListener(view -> {
-            editRecipe();
+            editRecipe(recipe.getRecipeID());
         });
 
         deleteButton.setOnClickListener((v) -> {
@@ -96,7 +96,7 @@ public class DetailsActivity extends AppCompatActivity {
         recipeTags.setText(recipe.getRecipeTags());
     }
 
-    public void editRecipe() {
+    public void editRecipe(String recipe_id) {
         String rcpName = recipeName.getText().toString().trim();
         String rcpDeta = recipeDetails.getText().toString().trim();
         String rcpIng = recipeIngredients.getText().toString().trim();
@@ -106,26 +106,32 @@ public class DetailsActivity extends AppCompatActivity {
         recipe1.setRecipeDetails(rcpDeta);
         recipe1.setRecipeIngredients(rcpIng);
         recipe1.setRecipeTags(rcpTag);
-        recipe1.setRecipeID(recipe.getRecipeID());
+        recipe1.setRecipeID(recipe1.getRecipeID());
+        recipe1.setRecipeID(recipe_id);
         db.updateRecipe(recipe1);
-        //updateWithHeroku(recipe1);
+        updateWithHeroku(recipe1);
     }
-    
+
     public void updateWithHeroku(Recipe recipe) {
+
         Gson gson = new GsonBuilder().setLenient().create();
-        retrofit = new Retrofit.Builder().baseUrl("https://secure-brushlands-89470.herokuapp.com")
+        retrofit = new Retrofit.Builder().baseUrl("https://secure-brushlands-89470.herokuapp.com/")
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
         RecipeService recipeService = retrofit.create(RecipeService.class);
+        call = recipeService.updateData(recipe,recipe.getRecipeID());//recipe, "57","Harikadetay", "mukemmel", "yuhnasilya","heeyo"
+        Log.i("Call nedir ", call.request().toString());
 
-        call = recipeService.updateData(recipe.getRecipeID(), recipe.getRecipeName(), recipe.getRecipeDetails(), recipe.getRecipeIngredients(), recipe.getRecipeTags());
         call.enqueue(new Callback<Recipe>() {
             @Override
             public void onResponse(Call<Recipe> call, Response<Recipe> response) {
                 Toast.makeText(DetailsActivity.this, "Updated", Toast.LENGTH_SHORT).show();
-                Log.i("update edildi mi", response.message());
+                //Log.i("Response Body", response.body().toString());
+                //Log.i("Mesaj.", response.message());
+                Log.i("Mesaj.", response.toString());
+
             }
 
             @Override
