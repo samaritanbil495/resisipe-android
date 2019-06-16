@@ -34,6 +34,7 @@ public class DetailsActivity extends AppCompatActivity {
     EditText recipeName;
     EditText recipeDetails;
     EditText recipeIngredients;
+    EditText recipeTags;
 
     Bitmap prepare;
     Bitmap cooking;
@@ -55,6 +56,7 @@ public class DetailsActivity extends AppCompatActivity {
         recipeName = findViewById(R.id.recipeName);
         recipeDetails = findViewById(R.id.recipeDetails);
         recipeIngredients = findViewById(R.id.recipeIngredients);
+        recipeTags = findViewById(R.id.recipeTags);
         initializeActivity();
 
         homeButton = findViewById(R.id.homeButton);
@@ -91,22 +93,22 @@ public class DetailsActivity extends AppCompatActivity {
         recipeName.setText(recipe.getRecipeName());
         recipeDetails.setText(recipe.getRecipeDetails());
         recipeIngredients.setText(recipe.getRecipeIngredients());
+        recipeTags.setText(recipe.getRecipeTags());
     }
 
     public void editRecipe() {
         String rcpName = recipeName.getText().toString().trim();
         String rcpDeta = recipeDetails.getText().toString().trim();
         String rcpIng = recipeIngredients.getText().toString().trim();
-
+        String rcpTag = recipeTags.getText().toString().trim();
         Recipe recipe1 = new Recipe();
-        recipe1.setRecipeName("melih");
-        recipe1.setRecipeDetails("dasdf");
-        recipe1.setRecipeIngredients("afasdf");
-        recipe1.setRecipeTags("tagtasg");
+        recipe1.setRecipeName(rcpName);
+        recipe1.setRecipeDetails(rcpDeta);
+        recipe1.setRecipeIngredients(rcpIng);
+        recipe1.setRecipeTags(rcpTag);
         recipe1.setRecipeID(recipe.getRecipeID());
-        Log.i("recipe id update?", recipe1.getRecipeID());
         db.updateRecipe(recipe1);
-        updateWithHeroku(recipe1);
+        //updateWithHeroku(recipe1);
     }
     
     public void updateWithHeroku(Recipe recipe) {

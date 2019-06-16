@@ -51,7 +51,7 @@ public class AddActivity extends AppCompatActivity {
         addRecipeButton = findViewById(R.id.add_recipe);
 
         recipeNameText = findViewById(R.id.recipeName);
-        recipeDetailsText = findViewById(R.id.recipeIngredients);
+        recipeDetailsText = findViewById(R.id.recipeDetails);
         recipeIngredientsText = findViewById(R.id.recipeIngredients);
         recipeTagsText = findViewById(R.id.recipeTags);
 
@@ -86,14 +86,20 @@ public class AddActivity extends AppCompatActivity {
         String recipeIngredients = recipeIngredientsText.getText().toString().trim();
         String recipeTags = recipeTagsText.getText().toString().trim();
 
-        if(recipeName != null && recipeName.equals("") && recipeDetails != null && recipeDetails.equals("")) {
-            recipe.setRecipeName("");
+
+        if(recipeName != null && !recipeName.equals("") && recipeDetails != null && !recipeDetails.equals("")) {
+            recipe.setRecipeName(recipeName);
             recipe.setRecipeDetails(recipeDetails);
             recipe.setRecipeID(generateID());
             recipe.setRecipeIngredients(recipeIngredients);
             recipe.setRecipeTags(recipeTags);
             db.insertRecipe(recipe);
-            addRecipeToHeroku(recipe);
+            Log.i("info", recipe.getRecipeName());
+            Log.i("info", recipe.getRecipeDetails());
+            Log.i("info", recipe.getRecipeIngredients());
+            Log.i("info", recipe.getRecipeID());
+            Log.i("info", recipe.getRecipeTags());
+            //addRecipeToHeroku(recipe);
             goHome();
         } else {
             Toast.makeText(getApplicationContext(), "Do not leave empty!", Toast.LENGTH_SHORT).show();

@@ -93,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<Recipe>>() {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                db.clearTable();
                 for(Recipe r : response.body())
                     db.insertRecipe(r);
                 recipeList.addAll(db.getRecipeList());

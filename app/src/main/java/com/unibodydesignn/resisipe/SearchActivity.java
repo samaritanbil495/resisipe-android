@@ -43,8 +43,10 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         db = MainActivity.db;
-        recipeList = db.getRecipeList();
-
+        recipeList = new ArrayList<>();
+        //recipeList = db.getRecipeList();
+        searchedList = new ArrayList<>();
+        initializeHeroku();
         initialize(recipeList);
 
         searchText = findViewById(R.id.searchText);
@@ -80,13 +82,12 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void search(String tag) {
-        searchedList = new ArrayList<>();
-        initialize(searchedList);
-        String word = tag;
+        Log.i("tag", tag);
         for(Recipe rcp : recipeList) {
-            if(rcp.getRecipeTags().contains(word))
+            if(rcp.getRecipeTags() != null && !rcp.getRecipeTags().equals("") && rcp.getRecipeTags().contains(tag))
                 searchedList.add(rcp);
         }
+        Log.i("list size", String.valueOf(searchedList.size()));
     }
 
     public void initialize(List<Recipe> list) {
@@ -95,6 +96,32 @@ public class SearchActivity extends AppCompatActivity {
         lv.setAdapter(ra);
     }
 
+    public void initializeHeroku() {
+
+        Gson gson = new GsonBuilder().setLenient().create();
+        // https://jsonplaceholder.typicode.com
+        retrofit = new Retrofit.Builder().baseUrl("https://secure-brushlands-89470.herokuapp.com")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
+
+        RecipeService recipeService = retrofit.create(RecipeService.class);
+        call = recipeService.allRecipes();
+        call.enqueue(new Callback<List<Recipe>>() {
+            @Override
+            public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+                for(Recipe r : response.body()) {
+                    recipeList.add(r);
+                    Log.i("tag", r.getRecipeTags());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Recipe>> call, Throwable t) {
+                Log.d("snow", t.getMessage().toString());
+            }
+        });
+    }
     public void goHome() {
         startActivity(new Intent(SearchActivity.this, MainActivity.class));
     }
