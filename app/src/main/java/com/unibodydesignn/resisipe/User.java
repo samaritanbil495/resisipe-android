@@ -9,24 +9,31 @@ public class User {
     @Expose
     private String nickname;
 
-    @SerializedName("user_email")
+    @SerializedName("email")
     @Expose
     private String email;
 
-    @SerializedName("user_password")
+    @SerializedName("passwor")
     @Expose
     private String password;
 
+    @SerializedName("id")
+    @Expose
+    private String userID;
+
     public User() {
-        nickname = "";
-        email = "";
-        password = "";
+        this.nickname = "";
+        this.email = "";
+        this.password = "";
+        this.userID = "";
+
     }
 
-    public User(String nickname, String email, String password) {
+    public User(String nickname, String email, String password, String userID) {
         this.nickname = nickname;
         this.email = email;
         this.password = password;
+        this.userID = userID;
     }
 
     public void setNickname(String nickname) {
@@ -51,5 +58,13 @@ public class User {
 
     public String getPassword() {
         return this.password;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public String getUserID() {
+        return this.userID;
     }
 }

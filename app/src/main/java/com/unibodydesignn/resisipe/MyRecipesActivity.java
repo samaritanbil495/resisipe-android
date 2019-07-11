@@ -3,6 +3,7 @@ package com.unibodydesignn.resisipe;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,18 +13,22 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class MyRecipesActivity extends AppCompatActivity {
 
+    public String userID;
     Button homeButton;
     Button addButton;
     Button searchButton;
@@ -34,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     public static Retrofit retrofit;
     public static RecipeService service;
     public static Call<List<Recipe>> call;
-    public String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,18 +77,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showMyRecipes() {
-        Intent myRecipes = new Intent(MainActivity.this, MyRecipesActivity.class);
+        Intent myRecipes = new Intent(MyRecipesActivity.this, MyRecipesActivity.class);
         myRecipes.putExtra("userID", userID);
         startActivity(myRecipes);
     }
 
     public void addResipe() {
-        Intent toSearch = new Intent(MainActivity.this, AddActivity.class);
+        Intent toSearch = new Intent(MyRecipesActivity.this, AddActivity.class);
+        toSearch.putExtra("userID", userID);
         startActivity(toSearch);
     }
 
     public void searchResipe() {
-        Intent toSearch = new Intent(MainActivity.this, SearchActivity.class);
+        Intent toSearch = new Intent(MyRecipesActivity.this, SearchActivity.class);
         startActivity(toSearch);
     }
 
@@ -107,7 +112,11 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<List<Recipe>>() {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-                recipeList.addAll(response.body());
+                ArrayList<Recipe> tempList = new ArrayList<>(response.body());
+                for(Recipe r : tempList)
+                    if(r.getRecipeUserID().equals(userID))
+                        recipeList.add(r);
+
                 initializeRecipes();
             }
 
@@ -120,18 +129,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     void requestPermission() {
-        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+        if (ContextCompat.checkSelfPermission(MyRecipesActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MyRecipesActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             } else {
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+                ActivityCompat.requestPermissions(MyRecipesActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
             }
         }
 
-        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(MyRecipesActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
 
-            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MyRecipesActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
             } else {
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                ActivityCompat.requestPermissions(MyRecipesActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
             }
         }
     }
@@ -143,21 +152,19 @@ public class MainActivity extends AppCompatActivity {
             case WRITE_EXTERNAL_STORAGE_PERMISSION:
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(MainActivity.this, "Permission Granted!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyRecipesActivity.this, "Permission Granted!", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Toast.makeText(MainActivity.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyRecipesActivity.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
                 }
 
             case READ_EXTERNAL_STORAGE_PERMISSION:
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(MainActivity.this, "Permission Granted!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyRecipesActivity.this, "Permission Granted!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(MainActivity.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyRecipesActivity.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
                 }
         }
     }
-
-
 }

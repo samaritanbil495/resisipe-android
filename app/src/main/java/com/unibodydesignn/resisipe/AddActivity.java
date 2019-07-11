@@ -37,12 +37,16 @@ public class AddActivity extends AppCompatActivity {
     public static Retrofit retrofit;
     public static RecipeService service;
     public static Call<Recipe> call;
+    public String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
         recipe = new Recipe();
+
+        Bundle bundle = getIntent().getExtras();
+        userID = bundle.getString("userID");
 
         homeButton = findViewById(R.id.homeButton);
         addButton = findViewById(R.id.addButton);
@@ -94,11 +98,13 @@ public class AddActivity extends AppCompatActivity {
             recipe.setRecipeID(generateID());
             recipe.setRecipeIngredients(recipeIngredients);
             recipe.setRecipeTags(recipeTags);
+            recipe.setRecipeUserID(userID);
             Log.i("info", recipe.getRecipeName());
             Log.i("info", recipe.getRecipeDetails());
             Log.i("info", recipe.getRecipeIngredients());
             Log.i("info", recipe.getRecipeID());
             Log.i("info", recipe.getRecipeTags());
+            Log.i("info", recipe.getRecipeUserID());
             addRecipeToHeroku(recipe);
             goHome();
         } else {

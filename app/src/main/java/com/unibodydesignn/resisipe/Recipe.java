@@ -28,6 +28,8 @@ public class Recipe implements Serializable {
     @Expose
     private String recipeDetails;
 
+    @SerializedName("recipe_id")
+    @Expose
     private String recipeUserID;
 
     @SerializedName("recipe_tags")
@@ -128,7 +130,6 @@ public class Recipe implements Serializable {
     }
 
     public String constructJSONCardInfo() {
-
         JSONObject obj = new JSONObject();
         try {
             obj.put("id", recipeID);

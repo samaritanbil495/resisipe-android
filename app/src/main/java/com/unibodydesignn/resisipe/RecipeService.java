@@ -39,8 +39,6 @@ public interface RecipeService {
     Call<Recipe> updateData(
             @Body Recipe user,
             @Path("id") String id
-
-
     );
 
 }
