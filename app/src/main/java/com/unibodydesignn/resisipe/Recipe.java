@@ -41,6 +41,7 @@ public class Recipe implements Serializable {
     private Bitmap cooked;
     private Bitmap enjoy;
     private String jsonText;
+    private String recipeURL;
 
     public Recipe() {
         this.recipeID = "";
@@ -127,6 +128,14 @@ public class Recipe implements Serializable {
 
     public String getRecipeTags() {
         return this.recipeTags;
+    }
+
+    public void setRecipeURL(String recipeURL) {
+        this.recipeURL = recipeURL;
+    }
+
+    public String getRecipeURL() {
+        return this.recipeURL;
     }
 
     public String constructJSONCardInfo() {

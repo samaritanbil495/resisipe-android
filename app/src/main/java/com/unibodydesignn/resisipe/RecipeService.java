@@ -41,5 +41,11 @@ public interface RecipeService {
             @Path("id") String id
     );
 
+    @GET("")
+    Call<User> loginUser();
+
+    @POST("")
+    Call<User> registerUser();
+
 }
 
