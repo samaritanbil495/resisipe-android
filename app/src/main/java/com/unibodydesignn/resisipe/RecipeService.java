@@ -47,5 +47,101 @@ public interface RecipeService {
     @POST("")
     Call<User> registerUser();
 
+
+    // kullanıcıyı register etmek icin --> http://resisipe.herokuapp.com/signup urlsi
+    // kullanıcıyı register edildikten sonra -->  http://resisipe.herokuapp.com/users/5
+    // kullanıcı login olması icin --> http://resisipe.herokuapp.com/login
+    // kullanıcı login olduktan sonra http://resisipe.herokuapp.com/
+
+    /*
+
+    void getRetrofitImage() {
+    Retrofit retrofit = new Retrofit.Builder()
+            .baseUrl(url)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+
+    RetrofitImageAPI service = retrofit.create(RetrofitImageAPI.class);
+
+    Call<ResponseBody> call = service.getImageDetails();
+
+    call.enqueue(new Callback<ResponseBody>() {
+        @Override
+        public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
+
+            try {
+
+                Log.d("onResponse", "Response came from server");
+
+                boolean FileDownloaded = DownloadImage(response.body());
+
+                Log.d("onResponse", "Image is downloaded and saved ? " + FileDownloaded);
+
+            } catch (Exception e) {
+                Log.d("onResponse", "There is an error");
+                e.printStackTrace();
+            }
+
+        }
+
+        @Override
+        public void onFailure(Throwable t) {
+            Log.d("onFailure", t.toString());
+        }
+    });
+}
+Following is the file handling code for image:
+
+private boolean DownloadImage(ResponseBody body) {
+
+        try {
+            Log.d("DownloadImage", "Reading and writing file");
+            InputStream in = null;
+            FileOutputStream out = null;
+
+            try {
+                in = body.byteStream();
+                out = new FileOutputStream(getExternalFilesDir(null) + File.separator + "AndroidTutorialPoint.jpg");
+                int c;
+
+                while ((c = in.read()) != -1) {
+                    out.write(c);
+                }
+            }
+            catch (IOException e) {
+                Log.d("DownloadImage",e.toString());
+                return false;
+            }
+            finally {
+                if (in != null) {
+                    in.close();
+                }
+                if (out != null) {
+                    out.close();
+                }
+            }
+
+            int width, height;
+            ImageView image = (ImageView) findViewById(R.id.imageViewId);
+            Bitmap bMap = BitmapFactory.decodeFile(getExternalFilesDir(null) + File.separator + "AndroidTutorialPoint.jpg");
+            width = 2*bMap.getWidth();
+            height = 6*bMap.getHeight();
+            Bitmap bMap2 = Bitmap.createScaledBitmap(bMap, width, height, false);
+            image.setImageBitmap(bMap2);
+
+            return true;
+
+        } catch (IOException e) {
+            Log.d("DownloadImage",e.toString());
+            return false;
+        }
+    }
+
+
+
+
+
+     */
+
 }
 

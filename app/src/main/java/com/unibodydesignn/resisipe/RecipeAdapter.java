@@ -49,10 +49,12 @@ public class RecipeAdapter extends BaseAdapter {
 
         String name = recipe.getRecipeName();
         String details = recipe.getRecipeIngredients();
+        String uid = recipe.getRecipeUserID();
         Bitmap pre = recipe.getPrepare();
         Bitmap coo = recipe.getCooking();
         Bitmap cod = recipe.getCooked();
         Bitmap enj = recipe.getEnjoy();
+
 
         ImageView recipePreview = convertView.findViewById(R.id.recipePreview);
         recipePreview.setImageBitmap(recipe.getEnjoy());
