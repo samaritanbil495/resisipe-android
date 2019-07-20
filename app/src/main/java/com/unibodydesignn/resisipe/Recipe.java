@@ -36,10 +36,7 @@ public class Recipe implements Serializable {
     @Expose
     private String recipeTags;
 
-    private Bitmap prepare;
-    private Bitmap cooking;
-    private Bitmap cooked;
-    private Bitmap enjoy;
+    private Bitmap recipeImage;
     private String jsonText;
     private String recipeURL;
 
@@ -70,6 +67,14 @@ public class Recipe implements Serializable {
        this.recipeIngredients = recipeIngredients + " ";
     }
 
+    public Bitmap getRecipeImage() {
+        return this.recipeImage;
+    }
+
+    public void setRecipeImage(Bitmap recipeImage) {
+        this.recipeImage = recipeImage;
+    }
+
     public String getRecipeIngredients() {
         return this.recipeIngredients;
     }
@@ -88,38 +93,6 @@ public class Recipe implements Serializable {
 
     public String getRecipeUserID() {
         return this.recipeUserID;
-    }
-
-    public void setPrepare(Bitmap prepare) {
-        this.prepare = prepare;
-    }
-
-    public Bitmap getPrepare() {
-        return this.prepare;
-    }
-
-    public void setCooking(Bitmap cooking) {
-        this.cooking = cooking;
-    }
-
-    public Bitmap getCooking() {
-        return this.cooking;
-    }
-
-    public void setCooked(Bitmap cooked) {
-        this.cooked = cooked;
-    }
-
-    public Bitmap getCooked() {
-        return this.cooked;
-    }
-
-    public void setEnjoy(Bitmap enjoy) {
-        this.enjoy = enjoy;
-    }
-
-    public Bitmap getEnjoy() {
-        return this.enjoy;
     }
 
     public void setRecipeTags(String recipeTags) {

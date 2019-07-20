@@ -28,5 +28,12 @@ public class IntroActivity extends AppCompatActivity {
         }, 3000);
     }
 
-
+    /**
+     *  TODO:
+     *  - Edit user email and password
+     *  - Upload images to server
+     *  - Download images from server
+     *  - Activate share intent
+     *  - Push notification when shared post was liked
+     */
 }
