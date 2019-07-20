@@ -45,8 +45,9 @@ public class AddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add);
         recipe = new Recipe();
 
-        Bundle bundle = getIntent().getExtras();
-        userID = bundle.getString("userID");
+        //Bundle bundle = getIntent().getExtras();
+        //userID = bundle.getString("userID");
+        userID = "5";
 
         homeButton = findViewById(R.id.homeButton);
         addButton = findViewById(R.id.addButton);
@@ -127,6 +128,7 @@ public class AddActivity extends AppCompatActivity {
             public void onResponse(Call<Recipe> call, Response<Recipe> response) {
                 Toast.makeText(AddActivity.this, "Added", Toast.LENGTH_SHORT).show();
                 Log.i("eklendi mi ", call.request().toString());
+                Log.i("info :", response.body().toString());
             }
 
             @Override

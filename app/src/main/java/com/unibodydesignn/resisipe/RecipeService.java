@@ -1,12 +1,20 @@
 package com.unibodydesignn.resisipe;
 
+import com.google.gson.JsonObject;
+
+import org.json.JSONObject;
+
 import java.util.List;
+
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
@@ -41,11 +49,14 @@ public interface RecipeService {
             @Path("id") String id
     );
 
-    @GET("")
-    Call<User> loginUser();
+    @GET("/users")
+    Call<List<User>> loginUser();
 
-    @POST("")
-    Call<User> registerUser();
+    @Headers("Content-Type: application/json")
+    @POST("/users/")
+    Call<User> registerUser(@Body JsonObject user);
+
+
 
 
     // kullanıcıyı register etmek icin --> http://resisipe.herokuapp.com/signup urlsi

@@ -3,45 +3,26 @@ package com.unibodydesignn.resisipe;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class User {
+import java.io.Serializable;
 
-    @SerializedName("user_nickname")
-    @Expose
-    private String nickname;
+public class User implements Serializable {
 
     @SerializedName("email")
     @Expose
     private String email;
 
-    @SerializedName("passwor")
+    @SerializedName("password")
     @Expose
     private String password;
 
-    @SerializedName("id")
-    @Expose
-    private String userID;
-
     public User() {
-        this.nickname = "";
         this.email = "";
         this.password = "";
-        this.userID = "";
-
     }
 
-    public User(String nickname, String email, String password, String userID) {
-        this.nickname = nickname;
+    public User(String email, String password) {
         this.email = email;
         this.password = password;
-        this.userID = userID;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public String getNickname() {
-        return this.nickname;
     }
 
     public void setEmail(String email) {
@@ -58,13 +39,5 @@ public class User {
 
     public String getPassword() {
         return this.password;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
-
-    public String getUserID() {
-        return this.userID;
     }
 }

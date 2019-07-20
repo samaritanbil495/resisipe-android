@@ -64,6 +64,13 @@ public class RecipeAdapter extends BaseAdapter {
 
         Button recipeDetails = convertView.findViewById(R.id.detailsButton);
         recipeDetails.setOnClickListener((view -> {
+            Intent i = new Intent(context.getApplicationContext(), ShowImagesActivity.class);
+            i.putExtra("recipe", recipe);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(i);
+        }));
+
+        convertView.setOnClickListener((view -> {
             Intent i = new Intent(context.getApplicationContext(), DetailsActivity.class);
             i.putExtra("recipe", recipe);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

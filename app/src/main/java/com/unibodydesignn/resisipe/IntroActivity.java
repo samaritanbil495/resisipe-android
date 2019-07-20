@@ -22,7 +22,7 @@ public class IntroActivity extends AppCompatActivity {
 
     void pass() {
         new Handler().postDelayed(() -> {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
         }, 3000);
