@@ -1,52 +1,103 @@
 package com.unibodydesignn.resisipe;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class ShowImagesActivity extends AppCompatActivity {
 
-    ImageView iv1;
-    ImageView iv2;
-    ImageView iv3;
-    ImageView iv4;
+    private ImageView iv1;
+
+    private final int LOAD_IMG = 1;
+    private final int SCAN = 3;
+
+    private final int WRITE_EXTERNAL_STORAGE_PERMISSION = 0;
+    private final int READ_EXTERNAL_STORAGE_PERMISSION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_images);
-
+        requestPermission();
         iv1 = findViewById(R.id.iv1);
-        iv2 = findViewById(R.id.iv2);
-        iv3 = findViewById(R.id.iv3);
-        iv4 = findViewById(R.id.iv4);
 
         iv1.setOnClickListener((v) -> {
             uploadImage();
         });
-
-        iv2.setOnClickListener((v) -> {
-            uploadImage();
-        });
-
-        iv3.setOnClickListener((v) -> {
-            uploadImage();
-        });
-
-        iv4.setOnClickListener((v) -> {
-            uploadImage();
-        });
-
-
     }
 
     public void uploadImage() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        String[] mimeTypes = {"image/jpeg", "image/png"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES,mimeTypes);
+        startActivityForResult(intent, LOAD_IMG);
+
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        // Result code is RESULT_OK only if the user selects an Image
+        if (resultCode == Activity.RESULT_OK)
+            switch (requestCode){
+                case LOAD_IMG:
+                    //data.getData returns the content URI for the selected Image
+                    Uri selectedImage = data.getData();
+                    iv1.setImageURI(selectedImage);
+                    break;
+            }
+    }
+
+    void requestPermission() {
+        if (ContextCompat.checkSelfPermission(ShowImagesActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(ShowImagesActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            } else {
+                ActivityCompat.requestPermissions(ShowImagesActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+            }
+        }
+
+        if (ContextCompat.checkSelfPermission(ShowImagesActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(ShowImagesActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            } else {
+                ActivityCompat.requestPermissions(ShowImagesActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+
+        switch (requestCode) {
+            case WRITE_EXTERNAL_STORAGE_PERMISSION:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(ShowImagesActivity.this, "Permission Granted!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ShowImagesActivity.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
+                }
+
+            case READ_EXTERNAL_STORAGE_PERMISSION:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(ShowImagesActivity.this, "Permission Granted!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ShowImagesActivity.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
+                }
+        }
 
     }
 
     /*
-    public static void main string args
     void getRetrofitImage() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
@@ -82,7 +133,6 @@ public class ShowImagesActivity extends AppCompatActivity {
             }
         });
     }
-    Following is the file handling code for image:
 
     private boolean DownloadImage(ResponseBody body) {
 

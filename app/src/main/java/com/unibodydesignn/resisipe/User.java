@@ -15,6 +15,10 @@ public class User implements Serializable {
     @Expose
     private String password;
 
+    @SerializedName("id")
+    @Expose
+    private String id;
+
     public User() {
         this.email = "";
         this.password = "";
@@ -39,5 +43,9 @@ public class User implements Serializable {
 
     public String getPassword() {
         return this.password;
+    }
+
+    public String getId() {
+        return this.id;
     }
 }

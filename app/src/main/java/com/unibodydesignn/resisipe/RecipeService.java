@@ -49,7 +49,7 @@ public interface RecipeService {
             @Path("id") String id
     );
 
-    @GET("/users")
+    @GET("/andusers/index")
     Call<List<User>> loginUser();
 
     @Headers("Content-Type: application/json")

@@ -51,9 +51,8 @@ public class MainActivity extends AppCompatActivity {
         searchButton = findViewById(R.id.searchButton);
         myRecipes = findViewById(R.id.myRecipes);
 
-        //Bundle bundle = getIntent().getExtras();
-        //userID = bundle.getString("userID");
-        userID = "5";
+        Bundle bundle = getIntent().getExtras();
+        userID = bundle.getString("userID");
 
         addButton.setOnClickListener((v) -> {
             addResipe();

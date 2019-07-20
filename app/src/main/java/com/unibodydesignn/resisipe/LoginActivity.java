@@ -32,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     public static Retrofit retrofit;
     public static RecipeService service;
     public static Call<List<User>> call;
+    public User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,20 +51,18 @@ public class LoginActivity extends AppCompatActivity {
             String password = passwordText.getText().toString().trim();
 
             for(User u : allUsers) {
-                if(u.getEmail().equals(email) && u.getPassword().equals(password)) {
-                    Toast.makeText(LoginActivity.this, "Succesfull login!", Toast.LENGTH_SHORT).show();
+                if(u.getEmail().equals(email)) {
+                    //Toast.makeText(LoginActivity.this, "Succesfull login!", Toast.LENGTH_SHORT).show();
+                    Log.i("basarili", u.getEmail() + " " + u.getId());
+                    currentUser = u;
                     break;
                 }
             }
 
-            /** TODO:
-             *  User will login and user data will be fetched from database
-             *  Send fetched user data to MainActivity class!
-             */
-
-            //Intent toMain = new Intent(LoginActivity.this, MainActivity.class);
-            //startActivity(toMain);
-            //finish();
+            Intent toMain = new Intent(LoginActivity.this, MainActivity.class);
+            toMain.putExtra("userID", currentUser.getId());
+            startActivity(toMain);
+            finish();
         });
 
         registerButton.setOnClickListener((V) -> {
