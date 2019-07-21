@@ -108,6 +108,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 recipeList.addAll(response.body());
+                for(Recipe r : recipeList) {
+                    Log.i("image url list ", r.getRecipeImage().toString());
+                }
                 initializeRecipes();
             }
 

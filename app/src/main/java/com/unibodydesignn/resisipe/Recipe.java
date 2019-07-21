@@ -38,7 +38,7 @@ public class Recipe implements Serializable {
     private String recipeTags;
 
     @SerializedName("image")
-    private transient JsonObject recipeImage;
+    private JsonObject recipeImage;
 
     private String imageURL;
     private String jsonText;
@@ -50,6 +50,7 @@ public class Recipe implements Serializable {
         this.recipeName = "";
         this.recipeIngredients = "";
         this.recipeUserID = "";
+        this.recipeImage = null;
     }
 
     public Recipe(String id, String recipeName, String recipeIngredients, String recipeUserID, JsonObject recipeImage) {

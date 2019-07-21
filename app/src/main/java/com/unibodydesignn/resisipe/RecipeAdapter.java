@@ -12,6 +12,9 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.gson.JsonObject;
+
 import java.util.List;
 
 public class RecipeAdapter extends BaseAdapter {
@@ -48,10 +51,6 @@ public class RecipeAdapter extends BaseAdapter {
 
         Recipe recipe = recipeList.get(pos);
 
-        String name = recipe.getRecipeName();
-        String details = recipe.getRecipeIngredients();
-        String uid = recipe.getRecipeUserID();
-
         ImageView recipePreview = convertView.findViewById(R.id.recipePreview);
 
         TextView recipeName = convertView.findViewById(R.id.recipeName);
@@ -59,9 +58,12 @@ public class RecipeAdapter extends BaseAdapter {
 
         Button recipeDetails = convertView.findViewById(R.id.detailsButton);
         recipeDetails.setOnClickListener((view -> {
+            Recipe recipe2 = recipeList.get(pos);
+            JsonObject temp = recipe2.getRecipeImage();
+            String imageURL = temp.get("url").toString();
             Intent i = new Intent(context.getApplicationContext(), ShowImagesActivity.class);
-            i.putExtra("recipe", recipe);
-            i.putExtra("image_url", recipe.getImageURL());
+            //i.putExtra("recipe", recipe2);
+            i.putExtra("image_url", imageURL);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
         }));

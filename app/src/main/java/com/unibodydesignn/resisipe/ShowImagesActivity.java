@@ -69,7 +69,7 @@ public class ShowImagesActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         imageURL = bundle.getString("image_url");
-        recipe = (Recipe) bundle.get("recipe");
+        //recipe = (Recipe) bundle.get("recipe");
 
         iv1 = findViewById(R.id.iv1);
         iv1.setOnClickListener((v) -> {
@@ -149,7 +149,12 @@ public class ShowImagesActivity extends AppCompatActivity {
     public void saveImageHeroku() {
 
         try {
-            URL url = new URL("https://resisipe.herokuapp.com" + "/uploads/recipe/image/1/812x467-442752019062.jpg");
+            Log.i("merhaba", "dn");
+
+            imageURL = imageURL.substring(1, imageURL.length() -1);
+            Log.i("url ", imageURL);
+            String url1 = "https://resisipe.herokuapp.com" + imageURL;
+            URL url = new URL(url1);
             Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
             iv1.setImageBitmap(bmp);
         } catch (MalformedURLException e) {
