@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.io.Serializable;
 
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -36,9 +37,13 @@ public class Recipe implements Serializable {
     @Expose
     private String recipeTags;
 
-    private Bitmap recipeImage;
+    @SerializedName("image")
+    private transient JsonObject recipeImage;
+
+    private String imageURL;
     private String jsonText;
     private String recipeURL;
+
 
     public Recipe() {
         this.recipeID = "";
@@ -67,12 +72,20 @@ public class Recipe implements Serializable {
        this.recipeIngredients = recipeIngredients + " ";
     }
 
-    public Bitmap getRecipeImage() {
+    public JsonObject getRecipeImage() {
         return this.recipeImage;
     }
 
-    public void setRecipeImage(Bitmap recipeImage) {
+    public String getImageURL() {
+        JsonObject recipeImage = getRecipeImage();
+        if (recipeImage != null)
+        this.imageURL = recipeImage.get("url").toString();
+        return this.imageURL;
+    }
+
+    public void setRecipeImage(JsonObject recipeImage) {
         this.recipeImage = recipeImage;
+
     }
 
     public String getRecipeIngredients() {
@@ -123,4 +136,5 @@ public class Recipe implements Serializable {
         jsonText = obj.toString();
         return jsonText;
     }
+
 }

@@ -23,6 +23,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -35,6 +37,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Url;
 
 public class ShowImagesActivity extends AppCompatActivity {
 
@@ -51,6 +54,7 @@ public class ShowImagesActivity extends AppCompatActivity {
     public static RecipeService service;
     public static Call<Recipe> call;
     public static Recipe recipe;
+    public static String imageURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +63,8 @@ public class ShowImagesActivity extends AppCompatActivity {
         requestPermission();
 
         Bundle bundle = getIntent().getExtras();
+        imageURL = bundle.getString("image_url");
         recipe = (Recipe) bundle.get("recipe");
-
         iv1 = findViewById(R.id.iv1);
         iv1.setOnClickListener((v) -> {
             uploadImage();
@@ -80,7 +84,7 @@ public class ShowImagesActivity extends AppCompatActivity {
         startActivityForResult(intent, LOAD_IMG);
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Result code is RESULT_OK only if the user selects an Image
         if (resultCode == Activity.RESULT_OK)
             switch (requestCode){
@@ -90,7 +94,7 @@ public class ShowImagesActivity extends AppCompatActivity {
                     iv1.setImageURI(selectedImage);
                     try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-                        recipe.setRecipeImage(bitmap);
+                        //recipe.setRecipeImage(bitmap);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -139,6 +143,22 @@ public class ShowImagesActivity extends AppCompatActivity {
     }
 
     public void saveImageHeroku() {
+
+        if(imageURL == null || imageURL.equals("")) {
+            Toast.makeText(this, "No image in this recipe!", Toast.LENGTH_SHORT).show();
+        } else {
+            Log.i("image url in recipe ", imageURL);
+            try {
+                URL url = new URL("https://resisipe.herokuapp.com" + imageURL);
+                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                iv1.setImageBitmap(bmp);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
 
     }
 
@@ -264,7 +284,7 @@ public class ShowImagesActivity extends AppCompatActivity {
             }
         });
     }
-    */
+
 
     private void uploadToServer(String filePath) {
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -295,4 +315,6 @@ public class ShowImagesActivity extends AppCompatActivity {
             }
         });
     }
+*/
+
 }

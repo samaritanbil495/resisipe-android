@@ -30,10 +30,10 @@ public class IntroActivity extends AppCompatActivity {
 
     /**
      *  TODO:
-     *  - Edit user email and password
-     *  - Upload images to server
-     *  - Download images from server
-     *  - Activate share intent
-     *  - Push notification when shared post was liked
+     * - Upload images to server
+     * - Download images from server
+     * - Activate share intent
+     * - Push notification when shared post was liked and is not logged out!
+     * - Background thread to count recipes like count!
      */
 }

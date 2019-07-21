@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,22 +43,18 @@ public class RecipeAdapter extends BaseAdapter {
     @Override
     public View getView(int pos, View convertView, ViewGroup viewGroup) {
 
-        Recipe recipe = recipeList.get(pos);
-
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(R.layout.recipelist, null);
+
+        Recipe recipe = recipeList.get(pos);
+        Log.i("image info ", recipe.getRecipeName());
+
 
         String name = recipe.getRecipeName();
         String details = recipe.getRecipeIngredients();
         String uid = recipe.getRecipeUserID();
-        Bitmap pre = recipe.getPrepare();
-        Bitmap coo = recipe.getCooking();
-        Bitmap cod = recipe.getCooked();
-        Bitmap enj = recipe.getEnjoy();
-
 
         ImageView recipePreview = convertView.findViewById(R.id.recipePreview);
-        recipePreview.setImageBitmap(recipe.getEnjoy());
 
         TextView recipeName = convertView.findViewById(R.id.recipeName);
         recipeName.setText(recipe.getRecipeName());
@@ -66,6 +63,7 @@ public class RecipeAdapter extends BaseAdapter {
         recipeDetails.setOnClickListener((view -> {
             Intent i = new Intent(context.getApplicationContext(), ShowImagesActivity.class);
             i.putExtra("recipe", recipe);
+            i.putExtra("image_url", recipe.getImageURL());
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
         }));

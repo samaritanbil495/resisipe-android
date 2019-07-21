@@ -19,6 +19,8 @@ public class User implements Serializable {
     @Expose
     private String id;
 
+    private String remainingTime;
+
     public User() {
         this.email = "";
         this.password = "";
@@ -47,5 +49,13 @@ public class User implements Serializable {
 
     public String getId() {
         return this.id;
+    }
+
+    public void setRemainingTime(String remainingTime) {
+        this.remainingTime = remainingTime;
+    }
+
+    public String getRemainingTime() {
+        return this.remainingTime;
     }
 }

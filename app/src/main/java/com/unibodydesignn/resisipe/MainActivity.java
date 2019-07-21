@@ -108,6 +108,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                 recipeList.addAll(response.body());
+                Log.i("size : ", String.valueOf(recipeList.size()));
+                for(Recipe r : recipeList) {
+                    Log.i("image url main act", r.getImageURL() + " ...");
+                }
                 initializeRecipes();
             }
 
@@ -116,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("snow", t.getMessage().toString());
             }
         });
+
     }
 
 

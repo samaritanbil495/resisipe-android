@@ -62,6 +62,13 @@ public interface RecipeService {
     @POST("/image")
     Call<Recipe> uploadImage(MultipartBody.Part part, RequestBody description);
 
+    @PATCH("users/{id}/edit")
+    Call<User> updateUser(
+            @Body JsonObject user,
+            @Path("id") String id
+    );
+
+
 
 
 
