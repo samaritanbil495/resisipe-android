@@ -47,8 +47,6 @@ public class RecipeAdapter extends BaseAdapter {
         convertView = inflater.inflate(R.layout.recipelist, null);
 
         Recipe recipe = recipeList.get(pos);
-        Log.i("image info ", recipe.getRecipeName());
-
 
         String name = recipe.getRecipeName();
         String details = recipe.getRecipeIngredients();

@@ -52,6 +52,16 @@ public class Recipe implements Serializable {
         this.recipeUserID = "";
     }
 
+    public Recipe(String id, String recipeName, String recipeIngredients, String recipeUserID, JsonObject recipeImage) {
+        this.recipeID = id;
+        this.recipeName = recipeName;
+        this.recipeIngredients = recipeIngredients;
+        this.recipeUserID = recipeUserID;
+        this.recipeImage = recipeImage;
+        this.imageURL = recipeImage.get("url").toString();
+        Log.i("Cagirildi mi ?", "cs");
+    }
+
     public void setRecipeID(String recipeID) {
         this.recipeID = recipeID;
     }

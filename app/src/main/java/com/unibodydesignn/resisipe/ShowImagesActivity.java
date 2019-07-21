@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.FileUtils;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,6 +51,7 @@ public class ShowImagesActivity extends AppCompatActivity {
 
     private final int WRITE_EXTERNAL_STORAGE_PERMISSION = 0;
     private final int READ_EXTERNAL_STORAGE_PERMISSION = 1;
+    private final int INTERNET = 2;
 
     public static Retrofit retrofit;
     public static RecipeService service;
@@ -58,6 +61,8 @@ public class ShowImagesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_images);
         requestPermission();
@@ -65,15 +70,14 @@ public class ShowImagesActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         imageURL = bundle.getString("image_url");
         recipe = (Recipe) bundle.get("recipe");
+
         iv1 = findViewById(R.id.iv1);
         iv1.setOnClickListener((v) -> {
             uploadImage();
         });
 
         saveButton = findViewById(R.id.saveImage);
-        saveButton.setOnClickListener((V) -> {
-            saveImageHeroku();
-        });
+        saveImageHeroku();
     }
 
     public void uploadImage() {
@@ -144,22 +148,15 @@ public class ShowImagesActivity extends AppCompatActivity {
 
     public void saveImageHeroku() {
 
-        if(imageURL == null || imageURL.equals("")) {
-            Toast.makeText(this, "No image in this recipe!", Toast.LENGTH_SHORT).show();
-        } else {
-            Log.i("image url in recipe ", imageURL);
-            try {
-                URL url = new URL("https://resisipe.herokuapp.com" + imageURL);
-                Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                iv1.setImageBitmap(bmp);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            URL url = new URL("https://resisipe.herokuapp.com" + "/uploads/recipe/image/1/812x467-442752019062.jpg");
+            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            iv1.setImageBitmap(bmp);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-
     }
 
     /*
