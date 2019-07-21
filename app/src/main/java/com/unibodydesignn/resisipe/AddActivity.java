@@ -92,7 +92,15 @@ public class AddActivity extends AppCompatActivity {
         String recipeIngredients = recipeIngredientsText.getText().toString().trim();
         String recipeTags = recipeTagsText.getText().toString().trim();
 
+        Intent i = new Intent(AddActivity.this, AddImageActivity.class);
+        i.putExtra("recipe_name", recipeName);
+        i.putExtra("recipe_details", recipeDetails);
+        i.putExtra("recipe_ingredients", recipeIngredients);
+        i.putExtra("recipe_tags", recipeTags);
+        i.putExtra("user_id", userID);
+        startActivity(i);
 
+        /*
         if(recipeName != null && !recipeName.equals("") && recipeDetails != null && !recipeDetails.equals("")) {
             recipe.setRecipeName(recipeName);
             recipe.setRecipeDetails(recipeDetails);
@@ -100,6 +108,7 @@ public class AddActivity extends AppCompatActivity {
             recipe.setRecipeIngredients(recipeIngredients);
             recipe.setRecipeTags(recipeTags);
             recipe.setRecipeUserID(userID);
+            recipe.setRecipeImage(null);
             Log.i("info", recipe.getRecipeName());
             Log.i("info", recipe.getRecipeDetails());
             Log.i("info", recipe.getRecipeIngredients());
@@ -110,7 +119,7 @@ public class AddActivity extends AppCompatActivity {
             goHome();
         } else {
             Toast.makeText(getApplicationContext(), "Do not leave empty!", Toast.LENGTH_SHORT).show();
-        }
+        } */
     }
     
     public void addRecipeToHeroku(Recipe recipe) {
