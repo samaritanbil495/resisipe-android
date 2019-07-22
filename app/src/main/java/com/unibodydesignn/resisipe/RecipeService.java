@@ -21,6 +21,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Url;
 
@@ -40,7 +41,8 @@ public interface RecipeService {
             @Field("recipe_name") String name,
             @Field("recipe_detail") String details,
             @Field("recipe_ingredients") String ingredients,
-            @Field("recipe_tags") String tags);
+            @Field("recipe_tags") String tags,
+            @Field("recipe_id") String recipeid);
     
     @DELETE("/recipes/{id}")
     Call<Recipe> deletePost(@Path("id") String id);
@@ -59,8 +61,8 @@ public interface RecipeService {
     Call<User> registerUser(@Body JsonObject user);
 
     @Multipart
-    @POST("/image")
-    Call<Recipe> uploadImage(MultipartBody.Part part, RequestBody description);
+    @POST("/uploads/recipe/image/1/{image_name}")
+    Call<Recipe> uploadImage(@Part MultipartBody.Part part,@Part("description") RequestBody description, @Path("image_name") String filename);
 
     @PATCH("users/{id}/edit")
     Call<User> updateUser(

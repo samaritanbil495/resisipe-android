@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         userID = bundle.getString("userID");
-
+        Log.i("EDİZZ", userID + " ");
         addButton.setOnClickListener((v) -> {
             addResipe();
         });
@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void addResipe() {
         Intent toSearch = new Intent(MainActivity.this, AddActivity.class);
+        toSearch.putExtra("userID", userID);
         startActivity(toSearch);
     }
 
