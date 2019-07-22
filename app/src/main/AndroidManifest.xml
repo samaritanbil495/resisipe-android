@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".AddImageActivity"></activity>
+        <activity android:name=".ProfileActivity" />
         <activity android:name=".ShowImagesActivity" />
         <activity android:name=".MyRecipesActivity" />
         <activity android:name=".LoginActivity" />
