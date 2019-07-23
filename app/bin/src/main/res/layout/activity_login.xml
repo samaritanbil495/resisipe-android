@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_background"
     tools:context=".LoginActivity">
 
     <EditText
@@ -15,11 +14,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
         android:ems="10"
-        android:hint="email"
         android:inputType="textEmailAddress"
-        android:textAlignment="center"
-        android:textColor="@android:color/holo_red_dark"
-        android:textColorHint="@android:color/holo_red_dark"
         app:layout_constraintBottom_toTopOf="@+id/loginPasswordText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -30,13 +25,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="36dp"
+        android:layout_marginBottom="128dp"
         android:ems="10"
-        android:hint="password"
         android:inputType="textPassword"
-        android:textAlignment="center"
-        android:textColor="@android:color/holo_red_dark"
-        android:textColorHint="@android:color/holo_red_dark"
         app:layout_constraintBottom_toTopOf="@+id/loginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -47,11 +38,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="196dp"
-        android:background="@null"
+        android:layout_marginBottom="224dp"
+        android:text="logın"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.257"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -60,10 +51,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="196dp"
-        android:background="@null"
+        android:layout_marginBottom="124dp"
+        android:text="register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.739"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
