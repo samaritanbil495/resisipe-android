@@ -25,7 +25,7 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Url;
 
-public interface RecipeService {
+public interface  RecipeService {
 
     @Headers({
             "Accept: application/json"
@@ -70,6 +70,12 @@ public interface RecipeService {
             @Path("id") String id
     );
 
+    @POST("/recipes/{recipe_id}/likes")
+    Call<Recipe> likeGivenRecipe(@Path("recipe_id") String id);
+
+    // /likes
+    @GET("/andlikes/index")
+    Call<List<Like>> allLikes();
 
 
 
