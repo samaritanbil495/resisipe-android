@@ -11,18 +11,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Type;
-import java.util.List;
-
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,18 +21,21 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class RegisterActivity extends AppCompatActivity {
+public class EditUserActivity extends AppCompatActivity {
 
-    public User user;
+    User user;
     public static Retrofit retrofit;
     public static RecipeService service;
     public static Call<User> call;
-    public String userID;
+    String user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        Bundle bundle = getIntent().getExtras();
+        user_id = bundle.getString("userID");
 
         EditText nicknameText = findViewById(R.id.nicknameText);
         EditText emailText = findViewById(R.id.emailText);
@@ -53,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         registerButton.setOnClickListener((v) -> {
             if(!confirmPasswordText.getText().toString().equals(passwordText.getText().toString()))
-                Toast.makeText(RegisterActivity.this, "Passwords must match!", Toast.LENGTH_SHORT);
+                Toast.makeText(EditUserActivity.this, "Passwords must match!", Toast.LENGTH_SHORT);
             else {
                 user = new User();
                 user.setNickname(nicknameText.getText().toString().trim());
@@ -91,12 +84,12 @@ public class RegisterActivity extends AppCompatActivity {
                 .build();
 
         RecipeService recipeService = retrofit.create(RecipeService.class);
-        call = recipeService.registerUser(jsonObject);
+        call = recipeService.updateUser(jsonObject, user_id);
 
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                Toast.makeText(RegisterActivity.this, "Registered!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditUserActivity.this, "Edited!", Toast.LENGTH_SHORT).show();
                 Log.i("eklendi mi? ", call.request().toString());
                 response.raw().header("user");
             }
@@ -106,13 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
                 Log.i("user eklendi mi ?", "hayir!");
                 // Intent to main login
-                Intent toLogin = new Intent(getApplicationContext(), LoginActivity.class);
-                startActivity(toLogin);
-                finish();
             }
         });
     }
-
-
-
 }

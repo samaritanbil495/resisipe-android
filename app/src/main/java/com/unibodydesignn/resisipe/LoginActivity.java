@@ -59,6 +59,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
 
+            Log.i("basariliasd", currentUser.getEmail() + " " + currentUser.getId());
+
             Intent toMain = new Intent(LoginActivity.this, MainActivity.class);
             toMain.putExtra("userID", currentUser.getId());
             startActivity(toMain);

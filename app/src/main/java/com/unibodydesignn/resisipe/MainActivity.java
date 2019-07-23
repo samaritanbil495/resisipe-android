@@ -51,9 +51,10 @@ public class MainActivity extends AppCompatActivity {
         searchButton = findViewById(R.id.searchButton);
         myRecipes = findViewById(R.id.myRecipes);
 
-        Bundle bundle = getIntent().getExtras();
-        userID = bundle.getString("userID");
-
+        //Bundle bundle = getIntent().getExtras();
+        //userID = bundle.getString("userID");
+        userID = "5";
+        Log.i("EDİZZ", userID + " ");
         addButton.setOnClickListener((v) -> {
             addResipe();
         });
@@ -73,13 +74,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showMyRecipes() {
-        Intent myRecipes = new Intent(MainActivity.this, MyRecipesActivity.class);
+        Intent myRecipes = new Intent(MainActivity.this, EditUserActivity.class);
         myRecipes.putExtra("userID", userID);
         startActivity(myRecipes);
     }
 
     public void addResipe() {
         Intent toSearch = new Intent(MainActivity.this, AddActivity.class);
+        toSearch.putExtra("userID", userID);
         startActivity(toSearch);
     }
 

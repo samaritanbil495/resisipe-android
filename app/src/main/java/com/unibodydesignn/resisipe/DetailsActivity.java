@@ -41,6 +41,14 @@ public class DetailsActivity extends AppCompatActivity {
     Bitmap cooked;
     Bitmap enjoy;
 
+
+    String recipe_id;
+    String recipe_name;
+    String recipe_details;
+    String recipe_ingredients;
+    String recipe_tags;
+    String recipe_user_id;
+
     public static Retrofit retrofit;
     public static RecipeService service;
     public static Call<Recipe> call;
@@ -50,7 +58,15 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        recipe = (Recipe) getIntent().getSerializableExtra("recipe");
+        //recipe = (Recipe) getIntent().getSerializableExtra("recipe");
+        Bundle bundle = getIntent().getExtras();
+
+        recipe_id = bundle.getString("recipe_id");
+        recipe_name = bundle.getString("recipe_name");
+        recipe_details = bundle.getString("recipe_details");
+        recipe_ingredients = bundle.getString("recipe_ingredients");
+        recipe_tags = bundle.getString("recipe_tags");
+        recipe_user_id = bundle.getString("recipe_user_id");
 
         recipeName = findViewById(R.id.recipeName);
         recipeDetails = findViewById(R.id.recipeDetails);
@@ -90,10 +106,10 @@ public class DetailsActivity extends AppCompatActivity {
         });
     }
     public void initializeActivity() {
-        recipeName.setText(recipe.getRecipeName());
-        recipeDetails.setText(recipe.getRecipeDetails());
-        recipeIngredients.setText(recipe.getRecipeIngredients());
-        recipeTags.setText(recipe.getRecipeTags());
+        recipeName.setText(recipe_name);
+        recipeDetails.setText(recipe_details);
+        recipeIngredients.setText(recipe_ingredients);
+        recipeTags.setText(recipe_tags);
     }
 
     public void editRecipe(String recipe_id) {

@@ -15,20 +15,28 @@ public class User implements Serializable {
     @Expose
     private String password;
 
+    @SerializedName("nickname")
+    @Expose
+    private String nickname;
+
     @SerializedName("id")
     @Expose
     private String id;
 
-    private String remainingTime;
+    @SerializedName("remainingTime")
+    private Integer remainingTime;
 
     public User() {
         this.email = "";
         this.password = "";
+        this.remainingTime = 0;
+        this.nickname = "";
     }
 
-    public User(String email, String password) {
+    public User(String email, String password, String nickname) {
         this.email = email;
         this.password = password;
+        this.nickname = "";
     }
 
     public void setEmail(String email) {
@@ -51,11 +59,19 @@ public class User implements Serializable {
         return this.id;
     }
 
-    public void setRemainingTime(String remainingTime) {
+    public void setRemainingTime(Integer remainingTime) {
         this.remainingTime = remainingTime;
     }
 
-    public String getRemainingTime() {
+    public Integer getRemainingTime() {
         return this.remainingTime;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public String getNickname() {
+        return this.nickname;
     }
 }

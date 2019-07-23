@@ -64,13 +64,28 @@ public class RecipeAdapter extends BaseAdapter {
             Intent i = new Intent(context.getApplicationContext(), ShowImagesActivity.class);
             //i.putExtra("recipe", recipe2);
             i.putExtra("image_url", imageURL);
+            Log.i("recipeeeee", recipe2.getRecipeID());
+            i.putExtra("recipe_id", recipe2.getRecipeID());
+            i.putExtra("recipe_name", recipe2.getRecipeName());
+            i.putExtra("recipe_details", recipe2.getRecipeDetails());
+            i.putExtra("recipe_ingredients", recipe2.getRecipeIngredients());
+            i.putExtra("recipe_tags", recipe2.getRecipeTags());
+            i.putExtra("recipe_user_id", recipe2.getRecipeUserID());
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
         }));
 
         convertView.setOnClickListener((view -> {
+            Recipe recipee = recipeList.get(pos);
             Intent i = new Intent(context.getApplicationContext(), DetailsActivity.class);
-            i.putExtra("recipe", recipe);
+            Log.i("recipeeeee", recipee.getRecipeID());
+            i.putExtra("recipe_id", recipee.getRecipeID());
+            i.putExtra("recipe_name", recipee.getRecipeName());
+            i.putExtra("recipe_details", recipee.getRecipeDetails());
+            i.putExtra("recipe_ingredients", recipee.getRecipeIngredients());
+            i.putExtra("recipe_tags", recipee.getRecipeTags());
+            i.putExtra("recipe_user_id", recipee.getRecipeUserID());
+
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
         }));
