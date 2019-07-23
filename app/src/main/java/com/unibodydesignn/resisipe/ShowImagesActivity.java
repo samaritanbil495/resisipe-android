@@ -64,6 +64,7 @@ public class ShowImagesActivity extends AppCompatActivity {
 
     String recipe_id = "";
     public static ArrayList<Like> likeList;
+    public static int numberOfLikes = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,13 +88,14 @@ public class ShowImagesActivity extends AppCompatActivity {
         likeButton = findViewById(R.id.like);
         likeList = initializeHeroku();
         Log.i("Peki ya burada : " , likeList.size()+"");
-        likeButton.setText(String.valueOf(likeCount(recipe_id, likeList)));
+
         likeButton.setOnClickListener((v) -> {
             likeRecipeRetrofit(recipe_id);
             likeList = initializeHeroku();
             Log.i("slyinda", likeList.toString());
+            this.numberOfLikes++;
             Log.i("like count clikec", String.valueOf(likeCount(recipe_id, likeList)));
-            likeButton.setText(String.valueOf(likeCount(recipe_id, likeList)));
+            likeButton.setText(String.valueOf(this.numberOfLikes));
         });
         saveImageHeroku();
     }
@@ -255,7 +257,9 @@ public class ShowImagesActivity extends AppCompatActivity {
 
         RecipeService recipeService = retrofit.create(RecipeService.class);
         likeCall = recipeService.allLikes();
+
         likeCall.enqueue(new Callback<List<Like>>() {
+            ArrayList<Like> temp =new ArrayList<Like>();
             @Override
             public void onResponse(Call<List<Like>> call, Response<List<Like>> response) {
                 for(Like l : response.body()) {
@@ -265,9 +269,13 @@ public class ShowImagesActivity extends AppCompatActivity {
                     Log.i("like info recipe id ", r.getRecipeID());
                     Log.i("like info recipe liker ", r.getRecipeLiker());
                     Log.i("like info recipe owner", r.getRecipeOwner());
+                    temp.add(r);
                 }
-                Log.i("cikinca", likeList.toString());
-
+                 Log.i("cikinca", likeList.toString());
+                likeList = temp;
+                int n = likeCount(recipe_id, likeList);
+                likeButton.setText(String.valueOf(n));
+                numberOfLikes = n;
             }
 
             @Override
