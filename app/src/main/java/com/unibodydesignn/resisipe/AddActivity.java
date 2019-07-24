@@ -1,3 +1,4 @@
+
 package com.unibodydesignn.resisipe;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.FileUtils;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -22,6 +24,10 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,6 +58,7 @@ public class AddActivity extends AppCompatActivity {
     public static RecipeService service;
     public static Call<Recipe> call;
     public String userID;
+    Uri selectedImage;
 
     public static final int READ_EXTERNAL_STORAGE_PERMISSION = 0;
 
@@ -157,7 +164,7 @@ public class AddActivity extends AppCompatActivity {
             switch (requestCode){
                 case LOAD_IMG:
                     //data.getData returns the content URI for the selected Image
-                    Uri selectedImage = data.getData();
+                    selectedImage = data.getData();
                     //iv.setImageURI(selectedImage);
                     try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
@@ -184,7 +191,7 @@ public class AddActivity extends AppCompatActivity {
         }
         return result;
     }
-    
+
     public void addRecipeToHeroku(Recipe recipe) {
         Gson gson = new GsonBuilder().setLenient().create();
         retrofit = new Retrofit.Builder().baseUrl("https://resisipe.herokuapp.com")
@@ -236,5 +243,52 @@ public class AddActivity extends AppCompatActivity {
                     Toast.makeText(AddActivity.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
                 }
         }
+    }
+
+    private void uploadFile(Uri fileUri) {
+        // create upload service client
+        Gson gson = new GsonBuilder().setLenient().create();
+        retrofit = new Retrofit.Builder().baseUrl("https://resisipe.herokuapp.com")
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson)).
+                        build();
+
+        RecipeService recipeService = retrofit.create(RecipeService.class);
+
+        // https://github.com/iPaulPro/aFileChooser/blob/master/aFileChooser/src/com/ipaulpro/afilechooser/utils/FileUtils.java
+        // use the FileUtils to get the actual file by uri
+        File file = new File(getRealPathFromURI(selectedImage));
+
+        // create RequestBody instance from file
+        RequestBody requestFile =
+                RequestBody.create(
+                        MediaType.parse(getContentResolver().getType(fileUri)),
+                        file
+                );
+
+        // MultipartBody.Part is used to send also the actual file name
+        MultipartBody.Part body =
+                MultipartBody.Part.createFormData("picture", file.getName(), requestFile);
+
+        // add another part within the multipart request
+        String descriptionString = "hello, this is description speaking";
+        RequestBody description =
+                RequestBody.create(
+                        okhttp3.MultipartBody.FORM, descriptionString);
+
+        // finally, execute the request
+        Call<ResponseBody> call = (Call<ResponseBody>) service.uploadImage(body, description, file.getName());
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call,
+                                   Response<ResponseBody> response) {
+                Log.v("Upload", "success");
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.e("Upload error:", t.getMessage());
+            }
+        });
     }
 }

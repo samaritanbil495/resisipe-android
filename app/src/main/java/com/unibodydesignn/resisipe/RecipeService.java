@@ -9,6 +9,7 @@ import java.util.List;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -62,7 +63,7 @@ public interface  RecipeService {
 
     @Multipart
     @POST("/uploads/recipe/image/1/{image_name}")
-    Call<Recipe> uploadImage(@Part MultipartBody.Part part,@Part("description") RequestBody description, @Path("image_name") String filename);
+    Call<ResponseBody> uploadImage(@Part MultipartBody.Part part, @Part("description") RequestBody description, @Path("image_name") String filename);
 
     @PATCH("users/{id}/edit")
     Call<User> updateUser(
