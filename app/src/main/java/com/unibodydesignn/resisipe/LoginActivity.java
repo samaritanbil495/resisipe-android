@@ -34,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
     public static Call<List<User>> call;
     public User currentUser;
 
+    boolean exists = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +48,14 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         registerButton = findViewById(R.id.toRegister);
 
+
         loginButton.setOnClickListener((v) -> {
             String email = emailText.getText().toString().trim();
             String password = passwordText.getText().toString().trim();
 
             for(User u : allUsers) {
                 if(u.getEmail().equals(email)) {
+                    exists = true;
                     //Toast.makeText(LoginActivity.this, "Succesfull login!", Toast.LENGTH_SHORT).show();
                     Log.i("basarili", u.getEmail() + " " + u.getId());
                     currentUser = u;
@@ -59,12 +63,17 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
 
-            Log.i("basariliasd", currentUser.getEmail() + " " + currentUser.getId());
+            if(!exists) {
+                Toast.makeText(getApplicationContext(), "Email or password incorrect!", Toast.LENGTH_SHORT).show();
+            } else {
+                Log.i("basariliasd", currentUser.getEmail() + " " + currentUser.getId());
+                Intent toMain = new Intent(LoginActivity.this, MainActivity.class);
+                toMain.putExtra("userID", currentUser.getId());
+                startActivity(toMain);
+                finish();
+            }
 
-            Intent toMain = new Intent(LoginActivity.this, MainActivity.class);
-            toMain.putExtra("userID", currentUser.getId());
-            startActivity(toMain);
-            finish();
+
         });
 
         registerButton.setOnClickListener((V) -> {

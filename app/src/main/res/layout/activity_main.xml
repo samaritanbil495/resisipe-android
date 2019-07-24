@@ -55,6 +55,7 @@
         android:id="@+id/addButton"
         android:layout_width="95dp"
         android:layout_height="55dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="60dp"
         android:background="@android:color/transparent"
@@ -65,8 +66,8 @@
 
     <Button
         android:id="@+id/homeButton"
-        android:layout_width="95dp"
-        android:layout_height="55dp"
+        android:layout_width="86dp"
+        android:layout_height="56dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="7dp"
         android:layout_marginBottom="60dp"
@@ -78,8 +79,8 @@
 
     <Button
         android:id="@+id/searchButton"
-        android:layout_width="95dp"
-        android:layout_height="55dp"
+        android:layout_width="78dp"
+        android:layout_height="57dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
@@ -110,9 +111,13 @@
         android:id="@+id/myRecipes"
         android:layout_width="74dp"
         android:layout_height="59dp"
-        android:text="my"
-        tools:layout_editor_absoluteX="320dp"
-        tools:layout_editor_absoluteY="611dp" />
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="56dp"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/searchButton"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

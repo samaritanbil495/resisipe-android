@@ -61,9 +61,9 @@ public class AddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add);
         recipe = new Recipe();
 
-        //Bundle bundle = getIntent().getExtras();
-        //userID = bundle.getString("userID");
-        userID = "5";
+        Bundle bundle = getIntent().getExtras();
+        userID = bundle.getString("userID");
+
 
         homeButton = findViewById(R.id.homeButton);
         addButton = findViewById(R.id.addButton);

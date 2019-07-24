@@ -18,7 +18,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".EditUserActivity"></activity>
-        <activity android:name=".AddImageActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".ShowImagesActivity" />
         <activity android:name=".MyRecipesActivity" />

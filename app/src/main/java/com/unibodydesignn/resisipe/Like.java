@@ -25,10 +25,6 @@ public class Like implements Serializable {
     @Expose
     private String recipeLiker;
 
-
-
-
-
     public Like() {
         this.recipeID = "";
         this.recipeOwner = "";

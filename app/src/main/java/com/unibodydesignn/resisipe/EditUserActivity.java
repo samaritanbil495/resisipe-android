@@ -32,18 +32,20 @@ public class EditUserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_edit_user);
 
         Bundle bundle = getIntent().getExtras();
         user_id = bundle.getString("userID");
 
         EditText nicknameText = findViewById(R.id.nicknameText);
+        nicknameText.setText("unibodydesignn");
         EditText emailText = findViewById(R.id.emailText);
+        emailText.setText("mmete@etu.edu.tr");
         EditText passwordText = findViewById(R.id.passwordText);
         EditText confirmPasswordText = findViewById(R.id.confirmPasswordText);
         EditText nDayText = findViewById(R.id.nDayText);
+        nDayText.setText("2");
         Button registerButton = findViewById(R.id.registerButton);
-
         registerButton.setOnClickListener((v) -> {
             if(!confirmPasswordText.getText().toString().equals(passwordText.getText().toString()))
                 Toast.makeText(EditUserActivity.this, "Passwords must match!", Toast.LENGTH_SHORT);

@@ -43,7 +43,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ShowImagesActivity extends AppCompatActivity {
 
     private ImageView iv1;
-    private Button saveButton;
+    private Button shareButton;
     private Button likeButton;
 
 
@@ -84,10 +84,15 @@ public class ShowImagesActivity extends AppCompatActivity {
             uploadImage();
         });
 
-        saveButton = findViewById(R.id.saveImage);
-        likeButton = findViewById(R.id.like);
+        shareButton = findViewById(R.id.shareButton);
+        likeButton = findViewById(R.id.likeButton);
+        likeButton.setText(String.valueOf(0));
         likeList = initializeHeroku();
         Log.i("Peki ya burada : " , likeList.size()+"");
+
+        shareButton.setOnClickListener((v) -> {
+            shareRecipe(recipe_id);
+        });
 
         likeButton.setOnClickListener((v) -> {
             likeRecipeRetrofit(recipe_id);
@@ -95,9 +100,21 @@ public class ShowImagesActivity extends AppCompatActivity {
             Log.i("slyinda", likeList.toString());
             this.numberOfLikes++;
             Log.i("like count clikec", String.valueOf(likeCount(recipe_id, likeList)));
-            likeButton.setText(String.valueOf(this.numberOfLikes));
+            likeButton.setText(String.valueOf(1));
         });
         saveImageHeroku();
+    }
+
+    public void shareRecipe(String recipe_id) {
+        Uri uri = Uri.parse("smsto:" + "5393626304");
+        Uri uri2 = Uri.parse("mailto:" + "unibodydesignn@gmail.com");
+        String shareBody = "https://resisipe.herokuapp.com/" + "recipes"+"/" + recipe_id;
+
+        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND, uri);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        startActivity(Intent.createChooser(sharingIntent, "Share via"));
     }
 
     public void uploadImage() {
@@ -109,7 +126,6 @@ public class ShowImagesActivity extends AppCompatActivity {
     }
 
     public  void likeRecipe(){
-        //sendNotification("aslibunubegendi");
         likeRecipeRetrofit(recipe_id);
     }
 
@@ -271,7 +287,7 @@ public class ShowImagesActivity extends AppCompatActivity {
                     Log.i("like info recipe owner", r.getRecipeOwner());
                     temp.add(r);
                 }
-                 Log.i("cikinca", likeList.toString());
+                Log.i("cikinca", likeList.toString());
                 likeList = temp;
                 int n = likeCount(recipe_id, likeList);
                 likeButton.setText(String.valueOf(n));
